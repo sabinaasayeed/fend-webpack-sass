@@ -1,19 +1,25 @@
 function handleSubmit(event) {
     event.preventDefault()
 
-    // check what text was put into the form field
-    let formText = document.getElementById('name').value
+    //constants 
+    const baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip='
+    const apiKey = '&appid=dd98cc709575188c291eba4ecdc98541';
 
-    Client.checkForName(formText)
+    // check what text was put into the form field
+    let zipCode = document.getElementById('name').value
+
+    //Client.checkForName(formText)
+
 
     console.log("::: Form Submitted :::")
-    fetch('http://localhost:8081/test')
-    .then(res => {
-        return res.json()
-    })
-    .then(function(data) {
-        document.getElementById('results').innerHTML = data.message
-    })
+    fetch(baseURL + zipCode + ',us' + apiKey + '&units=imperial')
+        .then(res => {
+            return res.json()
+        })
+        .then(function(data) {
+            document.getElementById('results').innerHTML = `City Name is: ${data.name}`;
+        })
 }
+
 
 export { handleSubmit }
